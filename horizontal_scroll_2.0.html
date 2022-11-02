@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Horizontal Scrolling</title>
+
+    <style>
+        #horizontal {
+            position: relative;
+            left: 0;
+            height: 100vh;
+            width: 1000vw;
+            background-image: url("https://static01.nyt.com/newsgraphics/2016/07/14/france-attack-scroller/9ec6dcec7e22fffa81a21fb790ba566f2c6aee83/base-big.jpg");
+            /* background: linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 1) 100%); */
+        }
+        
+        body {
+            overflow-x: hidden;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div style="height:50vh;background-color:royalblue"></div>
+
+    <div id="hframe" style="min-height:1000vh">
+        <div class="sticky-top">
+            <!-- 最裡面的division：被你橫向捲動的物件 -->
+            <div id="horizontal"></div>
+        </div>
+    </div>
+    <div style="height:300vh;">
+        <div style="height:100vh">
+            <h1>div 1</h1>
+        </div>
+        <div style="height:100vh">
+            <h1>div 2</h1>
+        </div>
+        <div style="height:100vh">
+            <h1>div 3</h1>
+        </div>
+    </div>
+    <div style="height:300vh;background-color:gray"></div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            let max_scroll = $(document).height() - $(window).height();
+            let max_w = $("#horizontal").width() - $(window).width();
+            let h_pos = $("#horizontal").offset().top;
+            let hframe_h = $("#hframe").height();
+            $(window).scroll(function() {
+                let current_pos = $(window).scrollTop();
+                if (current_pos > h_pos && current_pos < hframe_h) {
+                    let new_left = (-1 * max_w * (current_pos - h_pos)) / hframe_h;
+                    $("#horizontal").css({
+                        left: new_left
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
